@@ -1,0 +1,920 @@
+{
+	"info": {
+		"_postman_id": "93d49f68-9158-43d4-abdf-bfd6b36f37e6",
+		"name": "ExBanking_Test_Assignment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27159003",
+		"_collection_link": "https://www.postman.com/rvoronkov/workspace/exbanking-test-assignment/collection/27159003-93d49f68-9158-43d4-abdf-bfd6b36f37e6?action=share&source=collection_link&creator=27159003"
+	},
+	"item": [
+		{
+			"name": "1_Create_user.",
+			"item": [
+				{
+					"name": "ExBank FT-1 Create_user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Correct response code returned\", function(){\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Correct response message\", function(){\r",
+									"    pm.expect(jsonData.message).to.eql(\"User created successfully\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"username\" : \"Sample123\",\r\n\"initial_balance\" : 300\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/create_user",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"create_user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExBank FT-1/2 checking created user.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/get_user?username=Sample123",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"get_user"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "Sample123"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExBank FT-2 Create_already_exist_user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"username\" : \"Sample123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/create_user",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"create_user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExBank FT-3 Create user with special characters",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"username\" : \"user@456!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/create_user",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"create_user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExBank FT-3/2 Cheking Created user with special characters",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/get_user?username=user@456!",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"get_user"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "user@456!"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2_Deposit",
+			"item": [
+				{
+					"name": "ExBank FT-4 Deposit valid amount.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test (\"Correct response code returned\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test (\"Correct response message returned\", function(){\r",
+									"    pm.expect(jsonData.message).to.eql(\"Deposit successful\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"username\": \"Sample123\",\r\n\t\"amount\": 300\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/deposit",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"deposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExBank FT-5 Deposit zero amount.",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"username\": \"Sample123\",\r\n\t\"amount\": \"0\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/deposit",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"deposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExBank FT-5/2 Get balance",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"username\": \"Sample123\",\r\n\t\"amount\": \"1000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/get_balance?username=Sample123",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"get_balance"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "Sample123"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExBank FT-6 Deposit negative amount.",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"username\": \"Sample123\",\r\n\t\"amount\": \"-100\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/deposit",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"deposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExBank FT-6/2 Get balance",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"username\": \"Sample123\",\r\n\t\"amount\": \"1000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/get_balance?username=Sample123",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"get_balance"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "Sample123"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExBank FT-7 Deposit very large amount.",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"username\": \"Sample123\",\r\n\t\"amount\": \"1000000000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/deposit",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"deposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExBank FT-7/2 Get balance",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"username\": \"Sample123\",\r\n\t\"amount\": \"1000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/get_balance?username=Sample123",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"get_balance"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "Sample123"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3_Withdraw",
+			"item": [
+				{
+					"name": "ExBank FT-8 Withdraw a valid amount from users account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Correct response code returned\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm. test(\"Correct response message returned\", function(){\r",
+									"    pm.expect(jsonData.message).to.eql(\"Withdrawal successful\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"username\": \"Sample123\",\r\n\"amount_to_withdraw\" : 300\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/withdraw",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"withdraw"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExBank FT-9 Withdraw greater amount than the balance",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"username\": \"Sample123\",\r\n\"amount_to_withdraw\" : \"1500\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/withdraw",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"withdraw"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExBank FT-10 Withdraw a zero amount.",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"username\": \"Sample123\",\r\n\"amount_to_withdraw\" : \"0\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/withdraw",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"withdraw"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExBank FT-11 Withdraw a negative amount .",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"username\": \"Sample123\",\r\n\"amount_to_withdraw\" : \"-150\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/withdraw",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"withdraw"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Balance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/get_balance?username=Sample123",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"get_balance"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "Sample123"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "4_Get_Balance",
+			"item": [
+				{
+					"name": "ExBank FT-12 Get balance for existing user.",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/get_balance?username=Sample123",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"get_balance"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "Sample123"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExBank FT-13 Get balance for non-existing user.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Correct response code returned\", function(){\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"pm.test(\"Correct response message return\", function(){\r",
+									"    pm.expect(jsonData.message).to.eql(\"User not found\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/get_balance?username=99999",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"get_balance"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "99999"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "5_Send",
+			"item": [
+				{
+					"name": "ExBank FT-14 Send valid amount from one user to another.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData=pm.response.json();\r",
+									"\r",
+									"pm.test(\"Correct response code returned\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"pm.test(\"Correct response message returned\", function(){\r",
+									"    pm.expect(jsonData.message).to.eql(\"Transfer successful\")\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"from\": \"Sample123\",\r\n    \"to\": \"user@456!\",\r\n    \"transfer_amount\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/send",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"send"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExBank FT-15 Send greater amount than sender balance.",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"from\": \"Sample123\",\r\n    \"to\": \"user@456!\",\r\n    \"transfer_amount\": 600\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/send",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"send"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExBank FT-16 Send zero amount",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"from\": \"Sample123\",\r\n\"to\": \"user@456!\",\r\n\"transfer_amount\": \"0\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/send",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"send"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExBank FT-17 Send negative amount",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"from\": \"Sample123\",\r\n\"to\": \"user@456!\",\r\n\"transfer_amount\": \"-600\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/send",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"send"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExBank FT-18 Send from a non-existing user.",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"to\": \"user@456!\",\r\n\"transfer_amount\": \"0\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/send",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"send"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExBank FT-19 Send to a non-existing user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"from\": \"Sample123\",\r\n\"transfer_amount\": \"0\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/send",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"send"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Sender Balance.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"from\": \"Sample123\",\r\n    \"to\": \"user@456!\",\r\n    \"transfer_amount\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/get_balance?username=Sample123",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"get_balance"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "Sample123"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Recipient Balance",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"from\": \"Sample123\",\r\n    \"to\": \"user@456!\",\r\n    \"transfer_amount\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/get_balance?username=user@456!",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"get_balance"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "user@456!"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:8080"
+		}
+	]
+}

@@ -6,14 +6,14 @@ function generateRandomUsername() {
     return 'user_' + uuidv4().replace(/-/g, '').slice(0,8);
 }
 const csvwriter = createCsvWriter({
-    path: 'usernames.csv',
+    path: 'usernames1.csv',
     header: [
         {id: 'username', title: 'USERNAME'},
     ],
 })
 
 const records = [];
-for (let i =0; i<10000; i++) {
+for (let i =0; i<100000; i++) {
     records.push({username: generateRandomUsername()});
 }
 
