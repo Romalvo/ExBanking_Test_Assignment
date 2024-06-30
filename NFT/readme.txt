@@ -5,3 +5,4 @@ To run server need to run from the directory when the file located and in the te
 to run test need to type: k 6 run ExBank_NFT-1.js
 Functional tests done in Postman. Postman collection is located in FT Folder.
 Also 5 functional test has been automated in Postman.
+Non functional test located in NFT folder.
